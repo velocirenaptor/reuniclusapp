@@ -1,9 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+import 'dart:convert';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -20,9 +20,416 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 77, 74, 255)),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(0, 60, 11, 255)),
         ),
+        debugShowCheckedModeBanner: false,
         home: MyHomePage(),
+      ),
+    );
+  }
+}
+
+class ModelPage extends StatefulWidget {
+  @override
+  State<ModelPage> createState() => _ModelPageState();
+}
+
+class _ModelPageState extends State<ModelPage> {
+  final ageController = TextEditingController();
+  final sexController = TextEditingController();
+  final cpController = TextEditingController();
+  final trestbpsController = TextEditingController();
+  final cholController = TextEditingController();
+  final fbsController = TextEditingController();
+  final restecgController = TextEditingController();
+  final thalachController = TextEditingController();
+  final exangController = TextEditingController();
+  final oldpeakController = TextEditingController();
+  final slopeController = TextEditingController();
+  final caController = TextEditingController();
+  final thalController = TextEditingController();
+  String? modelResponse;
+
+  @override
+  void dispose() {
+    ageController.dispose();
+    sexController.dispose();
+    cpController.dispose();
+    trestbpsController.dispose();
+    cholController.dispose();
+    fbsController.dispose();
+    restecgController.dispose();
+    thalachController.dispose();
+    exangController.dispose();
+    oldpeakController.dispose();
+    slopeController.dispose();
+    caController.dispose();
+    thalController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: ageController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Age',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: sexController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Sex',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: cpController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: const Color.fromARGB(255, 38, 0, 53)),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Cp',
+                      hintStyle: TextStyle(color: const Color.fromARGB(255, 0, 8, 46)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: trestbpsController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: const Color.fromARGB(255, 38, 0, 53)),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Trestbps',
+                      hintStyle: TextStyle(color: const Color.fromARGB(255, 13, 0, 29)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: cholController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Chol',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: fbsController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Fbs',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: restecgController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Restecg',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: thalachController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Thalach',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: exangController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Exang',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: oldpeakController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Oldpeak',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: slopeController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Slope',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width: 150,
+                  child: TextField(
+                    controller: caController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      fillColor: Color.fromARGB(255, 81, 91, 146),
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      hintText: 'Ca',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              width: 150,
+              child: TextField(
+                controller: thalController,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  fillColor: Color.fromARGB(255, 81, 91, 146),
+                  filled: true,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                  hintText: 'Thal',
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    appState
+                        .callModel(
+                      ageController.text,
+                      sexController.text,
+                      cpController.text,
+                      trestbpsController.text,
+                      cholController.text,
+                      fbsController.text,
+                      restecgController.text,
+                      thalachController.text,
+                      exangController.text,
+                      oldpeakController.text,
+                      slopeController.text,
+                      caController.text,
+                      thalController.text,
+                    )
+                        .then((value) {
+                      setState(() {
+                        modelResponse = value;
+                      });
+                    });
+                  },
+                  child: Text('Predict'),
+                ),
+                if (modelResponse != null) ...[
+                  SizedBox(height: 20),
+                  Text(
+                      'Response: ${(json.decode(modelResponse!)['score'] * 100).toStringAsFixed(2)}%'),
+                ]
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -33,6 +440,51 @@ class MyAppState extends ChangeNotifier {
   var history = <WordPair>[];
 
   GlobalKey? historyListKey;
+
+  Future<String> callModel(
+      String age,
+      String sex,
+      String cp,
+      String trestbps,
+      String chol,
+      String fbs,
+      String restecg,
+      String thalach,
+      String exang,
+      String oldpeak,
+      String slope,
+      String ca,
+      String thal) async {
+    final url = Uri.parse("https://fastapiml-latest.onrender.com/score");
+    final headers = {"Content-Type": "application/json;charset=UTF-8"};
+    try {
+      final predictionInstance = {
+        "age": int.parse(age),
+        "sex": int.parse(sex),
+        "cp": int.parse(cp),
+        "trestbps": int.parse(trestbps),
+        "chol": int.parse(chol),
+        "fbs": int.parse(fbs),
+        "restecg": int.parse(restecg),
+        "thalach": int.parse(thalach),
+        "exang": int.parse(exang),
+        "oldpeak": double.parse(oldpeak),
+        "slope": int.parse(slope),
+        "ca": int.parse(ca),
+        "thal": int.parse(thal)
+      };
+      final res = await http.post(url,
+          headers: headers, body: jsonEncode(predictionInstance));
+      if (res.statusCode == 200) {
+        final jsonPrediction = res.body;
+        return jsonPrediction;
+      } else {
+        return 'Error: Status ${res.statusCode}';
+      }
+    } catch (e) {
+      return 'Error: ${e.toString()}';
+    }
+  }
 
   void getNext() {
     history.insert(0, current);
@@ -78,6 +530,8 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
       case 1:
         page = FavoritesPage();
+      case 2:
+        page = ModelPage();
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -103,6 +557,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(child: mainArea),
                 SafeArea(
                   child: BottomNavigationBar(
+                    backgroundColor: Theme.of(context)
+                        .colorScheme
+                        .surface, // Asegura el color de fondo
+                    type: BottomNavigationBarType.fixed,
                     items: [
                       BottomNavigationBarItem(
                         icon: Icon(Icons.home),
@@ -112,6 +570,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.favorite),
                         label: 'Favorites',
                       ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.rocket),
+                        label: 'Model',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.rocket_launch),
+                        label: 'Retrain',
+                      )
                     ],
                     currentIndex: selectedIndex,
                     onTap: (value) {
@@ -138,6 +604,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.favorite),
                         label: Text('Favorites'),
                       ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.rocket),
+                        label: Text('Model'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.rocket_launch),
+                        label: Text('Retrain'),
+                      )
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
@@ -209,9 +683,9 @@ class GeneratorPage extends StatelessWidget {
 
 class BigCard extends StatelessWidget {
   const BigCard({
-    Key? key,
+    super.key,
     required this.pair,
-  }) : super(key: key);
+  });
 
   final WordPair pair;
 
@@ -301,7 +775,7 @@ class FavoritesPage extends StatelessWidget {
 }
 
 class HistoryListView extends StatefulWidget {
-  const HistoryListView({Key? key}) : super(key: key);
+  const HistoryListView({super.key});
 
   @override
   State<HistoryListView> createState() => _HistoryListViewState();

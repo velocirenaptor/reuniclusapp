@@ -12,7 +12,6 @@ if (keystorePropertiesFile.exists()) {
     println "WARNING: key.properties file not found. Make sure it's in the root directory of your project."
 }
 
-// Debug output to check the keystore file path
 println "Keystore file path: ${keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : 'Not found'}"
 
 android {
@@ -31,10 +30,10 @@ android {
 
     defaultConfig {
         applicationId "com.adsofsito.reuniclus_leju"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutter.versionCode
-        versionName flutter.versionName
+        versionCode 1
+        versionName "1.0"
     }
 
     signingConfigs {
