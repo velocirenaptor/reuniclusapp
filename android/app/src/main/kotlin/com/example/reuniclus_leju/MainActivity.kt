@@ -1,4 +1,4 @@
-package com.example.reuniclus_leju
+package com.adsofsito.reuniclus_leju
 
 import io.flutter.embedding.android.FlutterActivity
 

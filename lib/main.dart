@@ -141,7 +141,7 @@ class _ModelPageState extends State<ModelPage> {
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
                       hintText: 'Cp',
-                      hintStyle: TextStyle(color: const Color.fromARGB(255, 0, 8, 46)),
+                      hintStyle: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide.none,
@@ -156,14 +156,14 @@ class _ModelPageState extends State<ModelPage> {
                     controller: trestbpsController,
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: const Color.fromARGB(255, 38, 0, 53)),
+                    style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
                     decoration: InputDecoration(
                       fillColor: Color.fromARGB(255, 81, 91, 146),
                       filled: true,
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
                       hintText: 'Trestbps',
-                      hintStyle: TextStyle(color: const Color.fromARGB(255, 13, 0, 29)),
+                      hintStyle: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide.none,
